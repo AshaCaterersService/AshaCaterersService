@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asha caterers service - Premium Catering for Every Occasion</title>
+    <meta name="description" content="Premium catering services for all occasions - from intimate gatherings to grand celebrations. Custom menus, expert chefs, and flawless service.">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-in-out',
+                        'bounce-slow': 'bounce 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-bg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* REPLACED slideshow styles with a background video */
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            pointer-events: none; /* let clicks go to buttons/links above */
+        }
+
+        /* Gradient overlay on top of video */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Ensure hero content sits above video & overlay */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-in-out;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-hover {
+            transition: transform 0.5s ease;
+        }
+        
+        .image-hover:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #d97706;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b45309;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Slide-down animation */
+        @keyframes slideDown {
+        from {
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        }
+
+        /* Slide-up animation */
+        @keyframes slideUp {
+        from {
+            
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+        }
+
+        .slide-down {
+        animation: slideDown 0.3s ease-out forwards;
+        }
+
+        .slide-up {
+        animation: slideUp 0.3s ease-in forwards;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold gradient-text">Asha caterers service</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-amber-600 transition-colors">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-amber-600 transition-colors">About</a>
+                    <a href="#services" class="text-gray-700 hover:text-amber-600 transition-colors">Services</a>
+                    <a href="#menu" class="text-gray-700 hover:text-amber-600 transition-colors">Menu</a>
+                    <a href="#gallery" class="text-gray-700 hover:text-amber-600 transition-colors">Gallery</a>
+                    <a href="#contact" class="text-gray-700 hover:text-amber-600 transition-colors">Contact</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700" aria-controls="mobileMenu" aria-expanded="false" onclick="toggleMobileMenu()">
+                    <svg id="iconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg id="iconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+    <!-- Mobile menu (hidden on md+) -->
+        <div id="mobileMenu" class="md:hidden hidden absolute left-0 top-full w-full bg-white/95 backdrop-blur-sm shadow-md z-40">
+            <div class="px-6 py-4 space-y-2">
+                <a href="#home" class="block text-gray-700 py-2 border-b border-gray-100" onclick="toggleMobileMenu(false)">Home</a>
+                <a href="#about" class="block text-gray-700 py-2 border-b border-gray-100" onclick="toggleMobileMenu(false)">About</a>
+                <a href="#services" class="block text-gray-700 py-2 border-b border-gray-100" onclick="toggleMobileMenu(false)">Events</a>
+                <a href="#menu" class="block text-gray-700 py-2 border-b border-gray-100" onclick="toggleMobileMenu(false)">Services</a>
+                <a href="#gallery" class="block text-gray-700 py-2 border-b border-gray-100" onclick="toggleMobileMenu(false)">Gallery</a>
+                <a href="#contact" class="block text-gray-700 py-2" onclick="toggleMobileMenu(false)">Contact</a>
+            </div>
+        </div>
+    </nav>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative">
+        <!-- Slideshow container (slides created by JS) -->
+        <div id="hero-slides" aria-hidden="true"></div>
+        <!-- Background video (replace src with your mp4 / webm) -->
+        <video id="hero-video" class="hero-video" autoplay muted loop playsinline preload="auto" poster="">
+            <source src="video.mp4" type="video/mp4">
+            <!-- Optional fallback/webm: -->
+            <!-- <source src="path/to/your-video.webm" type="video/webm"> -->
+            Your browser does not support the video tag.
+        </video>
+ 
+        <!-- gradient overlay -->
+        <div class="hero-overlay"></div>
+ 
+        <div class="text-center text-white px-6 max-w-4xl mx-auto animate-on-scroll hero-content">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                From Small Gatherings to
+                <span class="text-amber-400">Grand Galas</span>
+                <br>— We Cater It All!
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-200">
+                Serving unforgettable flavors, flawless service, and customized menus for every occasion.
+            </p>
+            <button onclick="window.open('https://wa.me/919821038324?text=Hello!%20I%20want%20to%20know%20more%20about%20your%20services.', '_blank')" class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                Plan Your Event
+            </button>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gradient-to-br from-amber-50 to-orange-50">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 animate-on-scroll">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                        About <span class="gradient-text">Flavors & Festivities</span>
+                    </h2>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        At Flavors & Festivities, we blend taste, tradition, and creativity to turn every meal into a memory. 
+                        Our passion for food and hospitality drives us to deliver exceptional culinary experiences that exceed expectations.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        With years of experience in the catering industry, our team of expert chefs and event coordinators 
+                        work tirelessly to ensure your special occasion is nothing short of perfect.
+                    </p>
+                    <div class="flex items-center space-x-4 pt-4">
+                        <div class="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center text-white text-xl">
+                            🍽️
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Our Mission</h3>
+                            <p class="text-gray-600">Creating unforgettable dining experiences, one event at a time.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative animate-on-scroll">
+                    <img src="https://cdn0.weddingwire.in/vendor/1033/3_2/1280/jpg/catering-quality-catering-services-food-display-1_15_291033-158554482089714.jpeg" 
+                         alt="Professional chefs at work" 
+                         class="rounded-lg shadow-2xl w-full h-96 object-cover">
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-amber-600">500+</div>
+                            <div class="text-sm text-gray-600">Events Catered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                    Our <span class="gradient-text">Events</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    From intimate dinners to grand celebrations, we provide exceptional catering services tailored to your needs.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service Card 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Small Events" 
+                             class="w-full h-48 object-cover image-hover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Small Events</h3>
+                        <p class="text-gray-600 mb-4">Perfect for intimate gatherings, birthdays, anniversaries, and baby showers.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>10-50 guests
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Custom menus
+                            </li>
+                        </ul>
+                        <div class="flex space-x-2">
+                            <button onclick="window.open('https://wa.me/919821038324?text=Hello!%20I%20want%20to%20know%20more%20about%20your%20services.', '_blank')" class="flex-1 bg-amber-600 text-white px-4 py-2 rounded text-sm hover:bg-amber-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80" 
+                             alt="Corporate Events" 
+                             class="w-full h-48 object-cover image-hover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Corporate Events</h3>
+                        <p class="text-gray-600 mb-4">Professional catering for meetings, office lunches, and corporate galas.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Business lunch boxes
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Formal dinners
+                            </li>
+                        </ul>
+                        <div class="flex space-x-2">
+                            <button onclick="window.open('https://wa.me/919821038324?text=Hello!%20I%20want%20to%20know%20more%20about%20your%20services.', '_blank')" class="flex-1 bg-amber-600 text-white px-4 py-2 rounded text-sm hover:bg-amber-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Weddings & Receptions" 
+                             class="w-full h-48 object-cover image-hover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Weddings & Receptions</h3>
+                        <p class="text-gray-600 mb-4">Make your special day unforgettable with our full-course meals and live counters.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Multi-cuisine options
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Live cooking stations
+                            </li>
+                        </ul>
+                        <div class="flex space-x-2">
+                            <button onclick="window.open('https://wa.me/919821038324?text=Hello!%20I%20want%20to%20know%20more%20about%20your%20services.', '_blank')" class="flex-1 bg-amber-600 text-white px-4 py-2 rounded text-sm hover:bg-amber-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Outdoor & Festival Catering" 
+                             class="w-full h-48 object-cover image-hover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Outdoor & Festival Catering</h3>
+                        <p class="text-gray-600 mb-4">Large-scale arrangements with portable kitchens and custom themes.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Portable kitchens
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Large capacity
+                            </li>
+                        </ul>
+                        <div class="flex space-x-2">
+                            <button onclick="window.open('https://wa.me/919821038324?text=Hello!%20I%20want%20to%20know%20more%20about%20your%20services.', '_blank')" class="flex-1 bg-amber-600 text-white px-4 py-2 rounded text-sm hover:bg-amber-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 5 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll">
+                    <div class="relative overflow-hidden">
+                        <img src="custome.png" 
+                             alt="Corporate Events" 
+                             class="w-full h-48 object-cover image-hover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Customizable Events</h3>
+                        <p class="text-gray-600 mb-4">customize you personal events.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Your Plans
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <span class="w-2 h-2 bg-amber-600 rounded-full mr-2"></span>Our Services
+                            </li>
+                        </ul>
+                        <div class="flex space-x-2">
+                            <button onclick="window.open('https://wa.me/919821038324?text=Hello!%20I%20want%20to%20know%20more%20about%20your%20services.', '_blank')" class="flex-1 bg-amber-600 text-white px-4 py-2 rounded text-sm hover:bg-amber-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 bg-gradient-to-br from-orange-50 to-amber-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                    Our <span class="gradient-text">Services</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    The Services We Provide.
+                </p>
+            </br></br>
+        <div class="space-y-3">
+            <div class="service-card bg-gray-100 rounded-lg p-3 shadow-sm cursor-pointer transition hover:bg-gray-200"
+                onclick="toggleInfo(this)">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white">✔</div>
+                <span class="font-medium">🎶 Entertainment & Ambience</span>
+            </div>
+            <div align="left" class="info hidden mt-2 text-sm text-gray-600 pl-10">
+            <ul class="list-disc list-inside space-y-1">
+                <li>Professional DJ and sound system setup</li>
+                <li>Live music bands and singers</li>
+                <li>LED dance floor and lighting effects</li>
+                <li>Anchor/Emcee services for hosting</li>
+                <li>Projector and screen setup for presentations or slideshows</li>
+
+            </ul>
+            </div>
+            </div>
+            
+            <div class="service-card bg-gray-100 rounded-lg p-3 shadow-sm cursor-pointer transition hover:bg-gray-200"
+                onclick="toggleInfo(this)">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white">✔</div>
+                <span class="font-medium">🍸 Food & Beverage Add-Ons</span>
+            </div>
+            <div align="left" class="info hidden mt-2 text-sm text-gray-600 pl-10">
+            <ul class="list-disc list-inside space-y-1">
+                <li>Mocktail and cocktail bar counters</li>
+                <li>Live cooking and barbeque stations</li>
+                <li>Non-veg and multi-cuisine options</li>
+                <li>Custom dessert stations (chocolate fountain, pastries, etc.)</li>
+                <li>Tea, coffee, and beverage service throughout the event</li>
+            </ul>
+            </div>
+            </div>
+            
+            <div class="service-card bg-gray-100 rounded-lg p-3 shadow-sm cursor-pointer transition hover:bg-gray-200"
+                onclick="toggleInfo(this)">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white">✔</div>
+                <span class="font-medium">🎨 Décor & Theme Design</span>
+            </div>
+            <div align="left" class="info hidden mt-2 text-sm text-gray-600 pl-10">
+            <ul class="list-disc list-inside space-y-1">
+                <li>Stage, mandap, and backdrop decoration</li>
+                <li>Floral and theme-based décor</li>
+                <li>Balloon, lighting, and color-coordinated setups</li>
+                <li>Entry arch, name boards, and photo booth decorations</li>
+                <li>Candlelight or royal theme dining setups</li>
+            </ul>
+            </div>
+            </div>
+            
+            <div class="service-card bg-gray-100 rounded-lg p-3 shadow-sm cursor-pointer transition hover:bg-gray-200"
+                onclick="toggleInfo(this)">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white">✔</div>
+                <span class="font-medium">🍽 Dining & Furniture Arrangements</span>
+            </div>
+            <div align="left" class="info hidden mt-2 text-sm text-gray-600 pl-10">
+            <ul class="list-disc list-inside space-y-1">
+                <li>Premium crockery and cutlery</li>
+                <li>Stylish tables, chairs, and tablecloths</li>
+                <li>Buffet counters and food warmers</li>
+                <li>Portable tents and seating arrangements for outdoor events</li>
+            </ul>
+            </div>
+            </div>
+            
+            <div class="service-card bg-gray-100 rounded-lg p-3 shadow-sm cursor-pointer transition hover:bg-gray-200"
+                onclick="toggleInfo(this)">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white">✔</div>
+                <span class="font-medium">👨‍🍳 Hospitality & Staff</span>
+            </div>
+            <div align="left" class="info hidden mt-2 text-sm text-gray-600 pl-10">
+            <ul class="list-disc list-inside space-y-1">
+                <li>Professional stewards and service staff</li>
+                <li>Uniformed waiters and chefs</li>
+                <li>On-site event coordinators</li>
+                <li>Cleaning and post-event assistance</li>
+            </ul>
+            </div>
+            </div>
+            
+            <div class="service-card bg-gray-100 rounded-lg p-3 shadow-sm cursor-pointer transition hover:bg-gray-200"
+                onclick="toggleInfo(this)">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white">✔</div>
+                <span class="font-medium">📸 Event Enhancements</span>
+            </div>
+            <div align="left" class="info hidden mt-2 text-sm text-gray-600 pl-10">
+            <ul class="list-disc list-inside space-y-1">
+                <li>Photography and videography</li>
+                <li>Drone coverage for large functions</li>
+                <li>Instant photo printing booth</li>
+                <li>Guest welcome drinks and snacks counters</li>
+                <li>Return gift arrangement for guests</li>
+            </ul>
+            </div>
+            </div>
+            
+            <div class="service-card bg-gray-100 rounded-lg p-3 shadow-sm cursor-pointer transition hover:bg-gray-200"
+                onclick="toggleInfo(this)">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white">✔</div>
+                <span class="font-medium">🚚 Logistics & Support</span>
+            </div>
+            <div align="left" class="info hidden mt-2 text-sm text-gray-600 pl-10">
+            <ul class="list-disc list-inside space-y-1">
+                <li>Transportation and food delivery setup</li>
+                <li>Generator and power backup</li>
+                <li>Waste management and cleaning staff</li>
+                <li>Security and valet parking (on request)</li>
+            </ul>
+            </div>
+            </div>
+            
+            <div class="service-card bg-gray-100 rounded-lg p-3 shadow-sm cursor-pointer transition hover:bg-gray-200"
+                onclick="toggleInfo(this)">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white">✔</div>
+                <span class="font-medium">🌟 Special Custom Packages</span>
+            </div>
+            <div align="left" class="info hidden mt-2 text-sm text-gray-600 pl-10">
+            <ul class="list-disc list-inside space-y-1">
+                <li>We also create customized event packages that fit your style, theme, and budget.</li>
+                <li>Whether it’s a wedding, corporate function, family gathering, or outdoor event, we handle every detail with care and creativity</li>
+            </ul>
+            </div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-20 bg-gradient-to-br from-amber-900 to-orange-900 text-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Why Choose <span class="text-amber-400">Flavors & Festivities</span>
+                </h2>
+                <p class="text-xl text-amber-100 max-w-2xl mx-auto">
+                    We go beyond just catering – we create extraordinary culinary experiences that leave lasting impressions.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl animate-on-scroll">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🥬</div>
+                        <h3 class="text-xl font-bold mb-3 text-amber-400">Fresh Ingredients Daily</h3>
+                        <p class="text-amber-100 leading-relaxed">
+                            We source the finest, freshest ingredients daily from local suppliers to ensure exceptional quality and taste.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl animate-on-scroll">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">👨‍🍳</div>
+                        <h3 class="text-xl font-bold mb-3 text-amber-400">Expert Chefs</h3>
+                        <p class="text-amber-100 leading-relaxed">
+                            Our team of experienced chefs brings years of culinary expertise and passion to every dish we create.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl animate-on-scroll">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🍽️</div>
+                        <h3 class="text-xl font-bold mb-3 text-amber-400">Live Cooking Stations</h3>
+                        <p class="text-amber-100 leading-relaxed">
+                            Interactive cooking stations where guests can watch their food being prepared fresh, adding excitement to your event.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl animate-on-scroll">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🎨</div>
+                        <h3 class="text-xl font-bold mb-3 text-amber-400">Custom Menu Designs</h3>
+                        <p class="text-amber-100 leading-relaxed">
+                            Personalized menus tailored to your preferences, dietary requirements, and cultural specifications.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl animate-on-scroll">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🚚</div>
+                        <h3 class="text-xl font-bold mb-3 text-amber-400">On-Time Delivery & Setup</h3>
+                        <p class="text-amber-100 leading-relaxed">
+                            Punctual delivery and professional setup service ensuring your event runs smoothly from start to finish.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl animate-on-scroll">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">⭐</div>
+                        <h3 class="text-xl font-bold mb-3 text-amber-400">5-Star Service</h3>
+                        <p class="text-amber-100 leading-relaxed">
+                            Exceptional customer service with attention to detail that makes every event memorable and stress-free.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16 animate-on-scroll">
+                <div class="inline-flex items-center space-x-8 bg-white/10 backdrop-blur-sm rounded-full px-8 py-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-amber-400">500+</div>
+                        <div class="text-sm text-amber-100">Events Catered</div>
+                    </div>
+                    <div class="w-px h-12 bg-amber-400/30"></div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-amber-400">50+</div>
+                        <div class="text-sm text-amber-100">Menu Items</div>
+                    </div>
+                    <div class="w-px h-12 bg-amber-400/30"></div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-amber-400">10+</div>
+                        <div class="text-sm text-amber-100">Years Experience</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                    Our <span class="gradient-text">Gallery</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+                    Take a look at some of our finest work – from intimate gatherings to grand celebrations.
+                </p>
+                
+                <!-- Category Filter -->
+                <div class="flex flex-wrap justify-center gap-2 mb-8">
+                    <button class="gallery-filter active bg-amber-600 text-white px-4 py-2 rounded text-sm hover:bg-amber-700 transition-colors" data-filter="all">All</button>
+                    <button class="gallery-filter border border-amber-600 text-amber-600 px-4 py-2 rounded text-sm hover:bg-amber-600 hover:text-white transition-colors" data-filter="food">Food</button>
+                    <button class="gallery-filter border border-amber-600 text-amber-600 px-4 py-2 rounded text-sm hover:bg-amber-600 hover:text-white transition-colors" data-filter="setup">Setup</button>
+                    <button class="gallery-filter border border-amber-600 text-amber-600 px-4 py-2 rounded text-sm hover:bg-amber-600 hover:text-white transition-colors" data-filter="events">Events</button>
+                </div>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="gallery-grid">
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.15_55d88386.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.34_fa38abcc.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.36_54cc56ac.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.36_7762be51.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white"> 
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.36_d7d3fd3d.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.37_3c6caeba.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.38_154b6012.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.38_f55dd0e7.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.39_2b7c2fda.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="food">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.09_d06e8415.jpg" 
+                             alt="Elegant buffet setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Food</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="events">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.55_2e37ef3f.jpg" 
+                             alt="Outdoor catering event" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Events</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="events">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.58_e102da9a.jpg" 
+                             alt="Outdoor catering event" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Events</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="events">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.06_63327602.jpg" 
+                             alt="Outdoor catering event" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Events</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="events">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.07_528377a8.jpg" 
+                             alt="Outdoor catering event" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Events</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="events">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.08_ece10b7b.jpg" 
+                             alt="Outdoor catering event" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Events</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="events">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.06_09203a1d.jpg" 
+                             alt="Outdoor catering event" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Events</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.42_659f6dd0.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.55_177b7a02.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.56_16c38dde.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.56_290d4596.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.56_dc70aa0c.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.57_0596aec6.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.57_e8b9215a.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.30.59_5f41b9b9.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.01_18f3d8b0.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.01_fe23c835.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.02_3e4ca2ae.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.02_90d3c494.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.03_a83432e6.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.04_7d53b922.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.05_15f9a056.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.05_b4045023.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.07_46a1c9d9.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.07_dbfb2ce8.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.08_3adc21d4.jpg" 
+                             alt="Wedding reception setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item bg-white rounded-lg shadow-lg overflow-hidden hover-lift animate-on-scroll" data-category="setup">
+                    <div class="relative overflow-hidden">
+                        <img src="WhatsApp Image 2025-11-25 at 21.31.08_230e9b4b.jpg" 
+                             alt="Formal dining setup" class="w-full h-64 object-cover image-hover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <div class="text-sm font-semibold">Formal dining setup</div>
+                                <div class="text-xs text-amber-300">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gradient-to-br from-amber-50 to-orange-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                    What Our <span class="gradient-text">Clients Say</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Don't just take our word for it – hear from our satisfied clients who have experienced our exceptional catering services.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6 hover-lift animate-on-scroll">
+                    <div class="flex mb-4">
+                        <span class="text-amber-500 text-lg">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <blockquote class="text-gray-700 mb-6 italic leading-relaxed">
+                        "I am writing to express my utmost satisfaction with the food and service provided by your catering company. The quality of the food was exceptional, and it was thoroughly enjoyed by all our guests. The flavors were delightful, and the presentation was superb.Additionally, I would like to commend the owner for his humility and politeness. He went above and beyond by providing us with more sweets than we ordered, a gesture that did not go unnoticed and was greatly appreciated. It truly reflects the high standards and generosity of your establishment.Thank you for making our event a memorable one with your outstanding service and delicious food. I look forward to using your catering services again in the future."
+                    </blockquote>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center text-white font-semibold">
+                            PP
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-800">Pradeep Prajapati</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 hover-lift animate-on-scroll">
+                    <div class="flex mb-4">
+                        <span class="text-amber-500 text-lg">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <blockquote class="text-gray-700 mb-6 italic leading-relaxed">
+                        "I want you to know that we are very pleased with everything thing last night from Start to finish.From the food quality and quantity, exceptional service, and especially accommodation to your complete menu change with such short notice .we very much appreciate you service and plan to reach out of future events.Best service and food in my budget thank you......"
+                    </blockquote>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center text-white font-semibold">
+                            BS
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-800">Bandana Sharma</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 hover-lift animate-on-scroll">
+                    <div class="flex mb-4">
+                        <span class="text-amber-500 text-lg">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <blockquote class="text-gray-700 mb-6 italic leading-relaxed">
+                        "Really satisfying taste of food 👌...it feels homemade and with quality. It was delivered on time and appreciate the efforts for informing...All the guest loved the food very much... thanks and will surely recommend it 👍"
+                    </blockquote>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center text-white font-semibold">
+                            PK
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-800">Pranesh Khambe</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trust Indicators -->
+            <div class="mt-16 text-center animate-on-scroll">
+                <div class="inline-flex items-center space-x-8 bg-white rounded-full px-8 py-4 shadow-lg">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-amber-600">4.9/5</div>
+                        <div class="text-sm text-gray-600">Average Rating</div>
+                    </div>
+                    <div class="w-px h-12 bg-gray-300"></div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-amber-600">98%</div>
+                        <div class="text-sm text-gray-600">Client Satisfaction</div>
+                    </div>
+                    <div class="w-px h-12 bg-gray-300"></div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-amber-600">85%</div>
+                        <div class="text-sm text-gray-600">Repeat Clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/Booking Section -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-amber-900 to-orange-900">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12 animate-on-scroll">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        Book Your <span class="text-amber-400">Event</span>
+                    </h2>
+                    <p class="text-xl text-amber-100 max-w-2xl mx-auto">
+                        Ready to create an unforgettable culinary experience? Let's discuss your event and create a custom menu just for you.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Contact Information -->
+                    <div class="bg-white/10 backdrop-blur-sm border border-amber-400/30 rounded-lg p-6 animate-on-scroll">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">Get in Touch</h3>
+                        <p class="text-amber-100 mb-6">Contact us directly or fill out the form to get a personalized quote.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-3 text-white">
+                                <div class="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center">📞</div>
+                                <div>
+                                    <div class="font-semibold">Phone</div>
+                                    <div class="text-amber-100">+91 8169689537</br>+91 9821038324</br>+91 8369773594</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3 text-white">
+                                <div class="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center">📧</div>
+                                <div>
+                                    <div class="font-semibold">Email</div>
+                                    <div class="text-amber-100"><a href="https://mail.google.com/mail/?view=cm&fs=1&to=ashacaterers27@gmail.com," class="__cf_email__" >ashacaterers27@gmail.com</a></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3 text-white">
+                                <div class="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center">📍</div>
+                                <div>
+                                    <div class="font-semibold">Location</div>
+                                    <div class="text-amber-100">Shop No 3, Gaov Devi temple Riksha Stand, Vichumbe Rd, above Gaovdevi mandir, New Panvel East, Usarli Khurd, Raigad, Navi Mumbai, Maharashtra 410221</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3 text-white">
+                                <div class="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center">⏰</div>
+                                <div>
+                                    <div class="font-semibold">Response Time</div>
+                                    <div class="text-amber-100">Within 24 hours</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Booking Form -->
+                    <div class="bg-white rounded-lg p-6 animate-on-scroll">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Request a Quote</h3>
+                        <p class="text-gray-600 mb-6">Fill out the details below and we'll get back to you with a personalized quote.</p>
+                        
+                        <form id="googleForm" class="space-y-4" action="https://docs.google.com/forms/d/e/1FAIpQLSd5sjiI3hCjxD-sHkuwSZmafMJiPT2X-AJt7By9uk4ZaphIng/formResponse" method="POST" onsubmit="submitted=true;">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                                    <input type="text" name="entry.1265428742" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Your full name">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                    <input type="email" name="entry.1771480617" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="your@email.com">
+                                </div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                                    <input type="tel" name="entry.459966562" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="+91 98765 43210">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Event Date *</label>
+                                    <input type="date" name="entry.411067490" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Event Type *</label>
+                                    <select name="entry.1298085837" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                        <option value="">Select event type</option>
+                                        <option value="wedding">Wedding & Reception</option>
+                                        <option value="corporate">Corporate Event</option>
+                                        <option value="birthday">Birthday Party</option>
+                                        <option value="anniversary">Anniversary</option>
+                                        <option value="outdoor">Outdoor Event</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Number of Guests *</label>
+                                    <select name="entry.1840505195" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                        <option value="">Select guest count</option>
+                                        <option value="10-25">10-25 guests</option>
+                                        <option value="26-50">26-50 guests</option>
+                                        <option value="51-100">51-100 guests</option>
+                                        <option value="101-200">101-200 guests</option>
+                                        <option value="200+">200+ guests</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Event Details & Special Requirements</label>
+                                <textarea rows="4" name="entry.370419434" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Tell us about your event theme, dietary preferences, special requirements, or any questions you have..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition-colors">
+                                Get Free Quote
+                            </button>
+                            
+                            <p class="text-sm text-gray-600 text-center">
+                                * Required fields. We respect your privacy and will never share your information.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-16">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Quick Links -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-semibold text-amber-400">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-300 hover:text-amber-400 transition-colors">Home</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-amber-400 transition-colors">About Us</a></li>
+                        <li><a href="#services" class="text-gray-300 hover:text-amber-400 transition-colors">Services</a></li>
+                        <li><a href="#menu" class="text-gray-300 hover:text-amber-400 transition-colors">Menu</a></li>
+                        <li><a href="#gallery" class="text-gray-300 hover:text-amber-400 transition-colors">Gallery</a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-amber-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-semibold text-amber-400">Contact Info</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-amber-400">📞</span>
+                            <div class="text-gray-300">+91 8169689537</br>+91 9821038324</br>+91 8369773594</div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-amber-400">📧</span>
+                            <div class="text-gray-300"><a href="https://mail.google.com/mail/?view=cm&fs=1&to=ashacaterers27@gmail.com," class="__cf_email__" >ashacaterers27@gmail.com</a></div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-amber-400">📍</span>
+                             <div class="text-gray-300">Shop No 3, Gaov Devi temple Riksha Stand, Vichumbe Rd, above Gaovdevi mandir, New Panvel East, Usarli Khurd, Raigad, Navi Mumbai, Maharashtra 410221</div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-amber-400">⏰</span>
+                            <span class="text-gray-300">Mon-Sun: 9 AM - 10 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="text-center md:text-left">
+                        <p class="text-gray-400">© 2025 Flavors & Festivities. All rights reserved.</p>
+                        <p class="text-sm text-gray-500 mt-1">Crafted with ❤️ for food lovers everywhere</p>
+                    </div>
+                    
+                    <div class="text-center md:text-right">
+                        <p class="text-lg font-semibold text-amber-400">
+                            "Your Event, Our Passion — Let's Make It Memorable!"
+                        </p>
+                        <div class="flex justify-center md:justify-end space-x-4 mt-2">
+                            <a href="#privacy" class="text-sm text-gray-400 hover:text-amber-400 transition-colors">Privacy Policy</a>
+                            <span class="text-gray-600">|</span>
+                            <a href="#terms" class="text-sm text-gray-400 hover:text-amber-400 transition-colors">Terms of Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // HERO BACKGROUND SLIDESHOW
+        (function () {
+            const slideImages = [
+                'https://lh3.googleusercontent.com/p/AF1QipOlA111tGVy9es-44L0bdCinPnDD2yIFlG8_6vp=s1360-w1360-h1020-rw',];
+
+            const slidesContainer = document.getElementById('hero-slides');
+            if (!slidesContainer) return;
+
+            // create slide elements
+            slideImages.forEach((src, i) => {
+                const s = document.createElement('div');
+                s.className = 'hero-slide' + (i === 0 ? ' active' : '');
+                s.style.backgroundImage = `url('${src}')`;
+                slidesContainer.appendChild(s);
+
+                // preload
+                const img = new Image();
+                img.src = src;
+            });
+
+            // cycle slides
+            let current = 0;
+            const slides = () => Array.from(document.querySelectorAll('.hero-slide'));
+            const changeInterval = 2000; // ms
+
+            setInterval(() => {
+                const all = slides();
+                if (all.length <= 1) return;
+                all[current].classList.remove('active');
+                current = (current + 1) % all.length;
+                all[current].classList.add('active');
+            }, changeInterval);
+        })();
+        // Background video helper: ensure plays (muted required for autoplay on most browsers)
+        (function () {
+            const vid = document.getElementById('hero-video');
+            if (!vid) return;
+            // try to play (some browsers require a user gesture unless muted)
+            const p = vid.play();
+            if (p && typeof p.then === 'function') {
+                p.catch(() => {
+                    // If autoplay blocked, keep it muted and show a play button later if needed
+                    vid.muted = true;
+                });
+            }
+            // Optional: pause video when hero is off-screen to save CPU/bandwidth
+            const heroSection = document.getElementById('home');
+            if (heroSection && 'IntersectionObserver' in window) {
+                const io = new IntersectionObserver(entries => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) vid.play().catch(()=>{});
+                        else vid.pause();
+                    });
+                }, { threshold: 0.25 });
+                io.observe(heroSection);
+            }
+        })();
+ 
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Gallery filter functionality
+        const filterButtons = document.querySelectorAll('.gallery-filter');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+                
+                // Update active button
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-amber-600', 'text-white');
+                    btn.classList.add('border', 'border-amber-600', 'text-amber-600');
+                });
+                button.classList.add('active', 'bg-amber-600', 'text-white');
+                button.classList.remove('border', 'border-amber-600', 'text-amber-600');
+                
+                // Filter gallery items
+                galleryItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 100);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Form submission handler
+       document.getElementById("googleForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const data = new FormData(form);
+
+  fetch("https://docs.google.com/forms/d/e/1FAIpQLSd5sjiI3hCjxD-sHkuwSZmafMJiPT2X-AJt7By9uk4ZaphIng/formResponse", {
+    method: "POST",
+    body: data,
+    mode: "no-cors"
+  })
+  .then(() => {
+    Swal.fire({
+      icon: "success",
+      title: "Thank you!",
+      text: "Your response has been submitted successfully.",
+      text: "Will reach out to you in 2 business days.",
+      confirmButtonColor: "#4CAF50"
+    });
+    form.reset();
+  })
+  .catch(() => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops!",
+      text: "Something went wrong. Please try again later.",
+      confirmButtonColor: "#d33"
+    });
+  });
+});
+
+        // Mobile menu toggle (if needed)
+        function toggleMobileMenu() {
+            // Mobile menu functionality can be added here
+            console.log('Mobile menu toggled');
+        }
+        function toggleMobileMenu(force) {
+            const btn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('mobileMenu');
+            const iconOpen = document.getElementById('iconOpen');
+            const iconClose = document.getElementById('iconClose');
+            if (!menu || !btn) return;
+
+            // determine target state
+            const shouldOpen = typeof force === 'boolean' ? force : menu.classList.contains('hidden');
+
+            if (shouldOpen) {
+                menu.classList.remove('hidden', 'slide-up');
+                menu.classList.add('block', 'slide-down');
+                btn.setAttribute('aria-expanded', 'true');
+                if (iconOpen) iconOpen.classList.add('hidden');
+                if (iconClose) iconClose.classList.remove('hidden');
+            } else {
+                menu.classList.remove('slide-down');
+                menu.classList.add('slide-up');
+                setTimeout(() => {
+                menu.classList.add('hidden');
+                menu.classList.remove('block');
+                }, 300); // match CSS animation duration
+                btn.setAttribute('aria-expanded', 'false');
+                if (iconOpen) iconOpen.classList.remove('hidden');
+                if (iconClose) iconClose.classList.add('hidden');
+            }
+            }
+
+        // Close mobile menu when resizing to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                const menu = document.getElementById('mobileMenu');
+                const btn = document.getElementById('mobileMenuBtn');
+                const iconOpen = document.getElementById('iconOpen');
+                const iconClose = document.getElementById('iconClose');
+                if (menu && !menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('block');
+                }
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+                if (iconOpen) iconOpen.classList.remove('hidden');
+                if (iconClose) iconClose.classList.add('hidden');
+            }
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                navbar.classList.add('bg-white/95');
+                navbar.classList.remove('bg-white/90');
+            } else {
+                navbar.classList.add('bg-white/90');
+                navbar.classList.remove('bg-white/95');
+            }
+        });
+        
+        // Service card info toggle
+        function toggleInfo(card) {
+        const info = card.querySelector('.info');
+        const allInfos = document.querySelectorAll('.info');
+
+        // close others
+        allInfos.forEach(el => {
+            if (el !== info) el.classList.add('hidden');
+        });
+
+        // toggle clicked one
+        info.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
